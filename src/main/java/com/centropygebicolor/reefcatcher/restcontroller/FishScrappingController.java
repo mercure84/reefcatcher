@@ -71,12 +71,24 @@ public class FishScrappingController {
     }
 
 
+    @GetMapping("/getFromMF")
+    public void getFishFromMF(){
+        String myUrl = "https://www.masterfisch.fr/meerwasser-fische-saegebarsche/1192-konig-salomon-zwergbarsch-nachzucht.html";
+        String response = restTemplateBuilder.build().getForObject(myUrl, String.class);
+        System.out.println("***FISH FROM RAH***");
+        String price = response.substring(response.indexOf("productPrice=") + 13, response.indexOf(";var productPriceTaxExcluded="));
+        System.out.println("Price = " + price);
+    }
+
+
+
     @GetMapping("/getAllFishScrap")
-    public void getAllFromRAH() {
+    public void getAllFishScrap() {
 
         List<SoldFish> fishes = soldFishRepository.findAll();
         WebSite rah = webSiteRepository.getWebSiteByName("RAH");
         WebSite po = webSiteRepository.getWebSiteByName("PO");
+        WebSite mf = webSiteRepository.getWebSiteByName("MF");
 
 
         Iterator<SoldFish> it = fishes.iterator();
@@ -84,11 +96,14 @@ public class FishScrappingController {
             SoldFish currentFish = it.next();
             try {
                 String scrappedWebsite = restTemplateBuilder.build().getForObject(currentFish.getUrl(), String.class);
-                String quantity ="";
-                String price = "";
+                String quantity ="0";
+                String price = "0";
                 if(currentFish.getWebsite().equals("RAH")){
                     quantity = scrappedWebsite.substring(scrappedWebsite.indexOf(rah.getQuantityStartIndex()) + rah.getQuantityStartIndex().length() , scrappedWebsite.indexOf(rah.getQuantityEndIndex()));
                     price = scrappedWebsite.substring(scrappedWebsite.indexOf(rah.getPriceStartIndex()) + rah.getPriceStartIndex().length(), scrappedWebsite.indexOf(rah.getPriceEndIndex()));
+                }
+                if(currentFish.getWebsite().equals("MF")){
+                    price = scrappedWebsite.substring(scrappedWebsite.indexOf(mf.getPriceStartIndex()) + mf.getPriceStartIndex().length(), scrappedWebsite.indexOf(mf.getPriceEndIndex()));
                 }
 
                 if (currentFish.getWebsite().equals("PO")){
