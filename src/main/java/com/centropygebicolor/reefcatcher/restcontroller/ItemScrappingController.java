@@ -61,6 +61,31 @@ public class ItemScrappingController {
 
 
     }
+    @GetMapping("/api/scrappAllItems")
+    public List<ScrapData> scrappAllItems() throws IOException {
+
+        List<Item> items = itemRepository.findAll();
+        List<ScrapData> scrapDataList = new ArrayList<>();
+
+
+
+        for(Item item : items) {
+            ScrapZone scrapZone = scrapeZoneRepository.getScrapZoneByItem(item);
+            List<WebSiteUrl> sitesToScrapp = scrapZone.getWebSiteUrlList();
+            for (WebSiteUrl webSiteUrl : sitesToScrapp) {
+                ScrapData scrapData = scrapHelper.getScrapData(webSiteUrl, item);
+                scrapDataList.add(scrapData);
+                scrapRepository.save(scrapData);
+            }
+        }
+
+
+
+        System.out.println("DATA ENREGISTREES : " + scrapDataList);
+        return scrapDataList;
+
+
+    }
 
 
 }

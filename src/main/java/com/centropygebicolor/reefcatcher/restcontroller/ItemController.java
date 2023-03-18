@@ -39,7 +39,7 @@ public class ItemController {
         Item newItem = new Item();
         newItem.setLabel(item.getLabel());
         itemRepository.save(newItem);
-        System.out.println("A new WEBSITE has ben registered " + newItem.getLabel());
+        System.out.println("A new ITEM has ben registered " + newItem.getLabel());
         return newItem;
     }
 
