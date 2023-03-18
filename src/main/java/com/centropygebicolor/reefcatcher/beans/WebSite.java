@@ -14,16 +14,23 @@ public class WebSite {
     int id;
     String name = "New Site";
     String alias = "NS";
-    String firstPriceClass = "";
-    String secondPriceClass = "";
-    String priceAttribute = "";
+    String firstPriceTag = "";
+    String secondPriceTag = "";
+    String thirdPriceTag = "";
 
-    public WebSite(String name, String alias, String firstPriceClass, String secondPriceClass, String priceAttribute) {
+    String firstQuantityTag = "";
+    String secondQuantityTag = "";
+    String thirdQuantityTag = "";
+
+    public WebSite(String name, String alias, String firstPriceTag, String secondPriceClass, String thirdPriceTag, String firstQuantityTag, String secondQuantityTag, String thirdQuantityTag) {
         this.name = name;
         this.alias = alias;
-        this.firstPriceClass = firstPriceClass;
-        this.secondPriceClass = secondPriceClass;
-        this.priceAttribute = priceAttribute;
+        this.firstPriceTag = firstPriceTag;
+        this.secondPriceTag = secondPriceClass;
+        this.thirdPriceTag = thirdPriceTag;
+        this.firstQuantityTag = firstQuantityTag;
+        this.secondQuantityTag = secondQuantityTag;
+        this.thirdQuantityTag = thirdQuantityTag;
     }
 
     public WebSite() {

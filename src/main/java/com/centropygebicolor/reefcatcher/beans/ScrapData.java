@@ -15,6 +15,7 @@ public class ScrapData {
     Date date = new Date();
     float price;
     int quantity;
+    boolean isAvailable;
 
     @ManyToOne
     Item item;
